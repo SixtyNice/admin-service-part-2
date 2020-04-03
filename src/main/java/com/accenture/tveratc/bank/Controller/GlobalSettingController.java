@@ -5,6 +5,8 @@ import com.accenture.tveratc.bank.entity.GlobalSetting;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.Map;
+import java.util.TreeMap;
 
 
 @Path("/global-setting")
@@ -24,8 +26,10 @@ public class GlobalSettingController {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     @Path("/update")
-    public String updateValue(GlobalSetting globalSetting) {
-        return new GlobalSettingService().updateValue(globalSetting);
+    public Map<String, String> updateValue(GlobalSetting globalSetting) {
+        Map<String, String> response = new TreeMap<>();
+        response.put("Response", new GlobalSettingService().updateValue(globalSetting));
+        return response;
     }
 
 
