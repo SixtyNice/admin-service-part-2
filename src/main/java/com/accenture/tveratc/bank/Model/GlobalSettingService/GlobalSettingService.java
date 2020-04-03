@@ -14,9 +14,9 @@ public class GlobalSettingService {
         boolean status = globalSettingDAO.updateValue(globalSetting.getCode(), globalSetting.getValue());
 
         if (status) {
-            return "Обновление произошло успешно";
+            return "success";
         } else {
-            return "Не получилось обновить";
+            return "error";
         }
     }
 }
