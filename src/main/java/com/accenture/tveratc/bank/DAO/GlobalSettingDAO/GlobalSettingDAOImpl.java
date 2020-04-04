@@ -1,18 +1,18 @@
-package com.accenture.tveratc.bank.DAO;
+package com.accenture.tveratc.bank.DAO.GlobalSettingDAO;
 
 import com.accenture.tveratc.bank.entity.GlobalSetting;
 
 import javax.persistence.*;
 
-public class GlobalSettingDAO {
+public class GlobalSettingDAOImpl implements GlobalSettingDAO {
 
-    private static final EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("com.accenture.tveratc.bank.DAO.GlobalSettingDAO");
+    private static final EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("com.accenture.tveratc.bank.DAO.GlobalSettingDAO.GlobalSettingDAOImpl");
     private static final boolean initialField = new InitialDefaultFields().initializeDefaultFields();
 
 
     public GlobalSetting getCode(String code) {
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
-        String query = "SELECT c FROM GlobalSetting c WHERE c.code=:code";
+        String query = "SELECT code FROM GlobalSetting code WHERE code.code=:code";
 
         TypedQuery<GlobalSetting> entityManagerQuery = entityManager.createQuery(query, GlobalSetting.class);
         entityManagerQuery.setParameter("code", code);
@@ -21,7 +21,6 @@ public class GlobalSettingDAO {
 
         try {
             globalSetting = entityManagerQuery.getSingleResult();
-            globalSetting = new GlobalSetting(globalSetting.getCode(), globalSetting.getValue());
         } catch (NoResultException ex) {
             ex.printStackTrace();
 
@@ -35,7 +34,7 @@ public class GlobalSettingDAO {
     public boolean updateValue(String code, String value) {
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
-        GlobalSetting globalSetting = null;
+        GlobalSetting globalSetting;
         boolean flag = true;
 
         try {
@@ -65,10 +64,10 @@ public class GlobalSettingDAO {
             EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
             EntityTransaction entityTransaction = null;
 
-            GlobalSetting globalSetting = null;
+            GlobalSetting globalSetting;
 
             try {
-                
+
                 entityTransaction = entityManager.getTransaction();
                 entityTransaction.begin();
                 globalSetting = entityManager.find(GlobalSetting.class, code);
